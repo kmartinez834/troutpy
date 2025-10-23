@@ -104,6 +104,7 @@ def define_urna(
         # Here we define extracellular transcripts as those that:
         # 1. Are not assigned to any cell (cell_id equals unassigned_tag), and
         # 2. Have a match_cell_signature that is not False (i.e. have a cell-like signature locally).
+        data["overlaps_cell"] = (data["cell_id"] != unassigned_tag).astype(int)
         cosine_sim_threshold = np.nanpercentile(data.loc[data["overlaps_cell"], "cosine_similarity"], percentile_threshold)
         data["match_cell_signature"] = data["cosine_similarity"] > cosine_sim_threshold
         data["extracellular"] = (~data["overlaps_cell"]) & (~data["match_cell_signature"])
