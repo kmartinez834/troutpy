@@ -290,7 +290,8 @@ def segmentation_free_sainsc(
          from their spatially closest neighbor (based on "x", "y").
     """
     # --- 1. Prepare Transcript Data ---
-    transcripts_all = sdata.points["transcripts"][["gene", "x", "y", "transcript_id"]].compute().reset_index(drop=True)
+    transcripts_all = sdata.points["transcripts"][["feature_name", "x", "y", "transcript_id"]].compute().reset_index(drop=True)
+    transcripts_all = transcripts_all.rename(columns={"feature_name": "gene"})
     # transcripts_all = transcripts_all[transcripts_all["codeword_category"] == codeword_category]
     transcripts_all = transcripts_all[transcripts_all["gene"].astype(str) != "nan"]
 
